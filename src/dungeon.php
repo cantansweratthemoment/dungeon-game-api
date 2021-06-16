@@ -59,3 +59,4 @@ foreach ($characterMoves as $id) {
 }
 fwrite(fopen("resources/output.json", "w+"), json_encode($character->getPoints()));
 //todo обработать исключения
+//todo дождаться ответа что такое выход

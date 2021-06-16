@@ -28,23 +28,34 @@ class Monster implements Interactive
         while ($this->strength > 0) {
             $punch = rand(MIN_PUNCH, MAX_PUNCH);
             logger("Монстру наносится урон величины " . $punch . ".");
-            if ($punch > $this->strength) {
+            if ($this->takeHit($punch)) {
                 $character->increasePoints($this->strength);
                 logger("Монстр побежден.\n");
-                break;
+            } else {
+                $this->decreaseStrength($this->lostPoints);
+                logger("Сила монстра уменьшена на " . $this->lostPoints . ".");
             }
-            $this->decreaseStrength($this->lostPoints);
-            logger("Сила монстра уменьшена на " . $this->lostPoints . ".");
         }
     }
 
-    public function setIsBeaten($isBeaten)
+    public function takeHit($punch)
+    {
+        if ($punch > $this->strength) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public
+    function setIsBeaten($isBeaten)
     {
         $this->isBeaten = $isBeaten;
     }
 
 
-    private function decreaseStrength($subtrahend)
+    private
+    function decreaseStrength($subtrahend)
     {
         $this->strength = $this->strength - $subtrahend;
     }
