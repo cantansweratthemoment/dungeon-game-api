@@ -1,10 +1,16 @@
 <?php
 require_once "Room.php";
+
 class EmptyRoom extends Room
 {
-
-    function interact($character)
+    public function __construct($id, $prevConnection, $nextConnection)
     {
-        // TODO: Implement interact() method.
+        parent::__construct($id, $prevConnection, $nextConnection);
     }
+
+    public function interact($character)
+    {
+        logger("Эта комната пустая.");
+    }
+
 }

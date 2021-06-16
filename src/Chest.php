@@ -2,19 +2,17 @@
 
 class Chest implements Interactive
 {
-    private $rarity;//todo можно брать информацию о диапазонах тоже из инпута
-    static private $rarityRule = array(
-        1 => [10, 20],
-        2 => [20, 30],
-        3 => [30, 40]
-    );
+    private $rarity;
+    static private $rarityRule;
     private $min, $max;
     private $isOpened;
 
     public function interact($character)
     {
         if (!$this->isOpened) {
+            logger("Сундук открылся.");
             $givenPoints = rand($this->min, $this->max);
+            logger("Полученное количество очков от сундука: " . $givenPoints);
             $character->increasePoints($givenPoints);
         }
     }
@@ -22,6 +20,11 @@ class Chest implements Interactive
     public function setIsOpened($isOpened)
     {
         $this->isOpened = $isOpened;
+    }
+
+    public static function setRarityRule($rarityRule)
+    {
+        self::$rarityRule = $rarityRule;
     }
 
     public function __construct($rarity)

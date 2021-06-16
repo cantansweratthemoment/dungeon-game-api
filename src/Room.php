@@ -1,19 +1,30 @@
 <?php
 require_once "Interactive.php";
+
 abstract class Room implements Interactive
 {
     protected $id;
-    protected $connection;
+    protected $prevConnection;
+    protected $nextConnection;
     protected $isVisited;
 
-    protected function changeVisited()
+    abstract public function interact($character);
+
+    public function visit()
     {
-        $this->isVisited = !$this->isVisited;
+        $this->isVisited = true;
     }
 
-    abstract function interact($character);
-    public function __construct()
+    public function __construct($id, $prevConnection, $nextConnection)
     {
-        $this->isVisited=false;
+        $this->prevConnection = $prevConnection;
+        $this->nextConnection = $nextConnection;
+        $this->id = $id;
+        $this->isVisited = false;
+    }
+
+    public function getIsVisited()
+    {
+        return $this->isVisited;
     }
 }

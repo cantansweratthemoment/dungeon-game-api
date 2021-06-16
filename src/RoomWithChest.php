@@ -6,15 +6,14 @@ class RoomWithChest extends Room
 
     public function interact($character)
     {
+        logger("Происходит взаимодействие с сундуком.");
         $this->chest->interact($character);
         $this->chest->setIsOpened(true);
     }
 
-    public function __construct($id, $connection, $chest)
+    public function __construct($id, $prevConnection, $nextConnection, $chest)
     {
-        $this->connection = $connection;
-        $this->id = $id;
+        parent::__construct($id, $prevConnection, $nextConnection);
         $this->chest = $chest;
-        $this->isVisited = false;
     }
 }
