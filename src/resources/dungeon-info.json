@@ -1,0 +1,20 @@
+[
+  {
+    "connection": 1,
+    "id": 0,
+    "type": "empty"
+  },
+  {
+    "connection": 2,
+    "id": 1,
+    "type": "empty"
+  },
+  {
+    "connection": -1,
+    "id": 2,
+    "type": "with-chest",
+    "chest": {
+      "type": 1
+    }
+  }
+]
