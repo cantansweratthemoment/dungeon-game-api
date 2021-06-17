@@ -31,7 +31,7 @@ class Chest implements Interactive
     {
         $this->rarity = $rarity;
         $this->isOpened = false;
-        $this->min = Chest::$rarityRule[$this->rarity][0];
-        $this->max = Chest::$rarityRule[$this->rarity][1];
+        $this->min = Chest::$rarityRule[$this->rarity - 1][0];
+        $this->max = Chest::$rarityRule[$this->rarity - 1][1];
     }
 }

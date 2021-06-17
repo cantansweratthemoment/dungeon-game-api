@@ -7,26 +7,32 @@
   },
   {
     "next-connection": 2,
-    "prev-connection": 1,
+    "prev-connection": 0,
     "id": 1,
     "type": "empty"
   },
   {
     "next-connection": 3,
-    "prev-connection": 2,
+    "prev-connection": 1,
     "id": 2,
     "type": "with-chest",
     "chest": {
-      "type": 1
+      "type": 2
+    }
+  },
+  {
+    "next-connection": 4,
+    "prev-connection": 2,
+    "id": 3,
+    "type": "with-monster",
+    "monster": {
+      "type": 3
     }
   },
   {
     "next-connection": -1,
     "prev-connection": 3,
-    "id": 3,
-    "type": "with-monster",
-    "monster": {
-      "type": 1
-    }
+    "id": 4,
+    "type": "exit"
   }
 ]

@@ -5,6 +5,8 @@ require_once "Chest.php";
 require_once "RoomWithChest.php";
 require_once "Monster.php";
 require_once "RoomWithMonster.php";
+require_once "ExitRoom.php";
+require_once "WrongCharacterMoveException.php";
 function logger($message)
 {
     $log_dirname = 'logs';
@@ -20,9 +22,10 @@ $character = new Character();
 logger("Создан персонаж.");
 $character->setCurrentPosition($characterMoves[0]);
 logger("Позиция персонажа: " . $character->getCurrentPosition() . ".");
+$flagFirstPosition = true;//маленький костыль чтобы не выбрасывать исключение на первой позиции
 $entitiesInfo = json_decode(file_get_contents("resources/entities-info.json"), true);
 $character->setPoints($entitiesInfo["start-points"]);
-logger("Количество очков персонажа: " . $character->getPoints() . ".");
+logger("Количество очков персонажа: " . $character->getPoints() . ".\n");
 Chest::setRarityRule($entitiesInfo["rarity-rule"]);
 Monster::setStrengthRule($entitiesInfo["strength-rule"]);
 $dungeonInfo = json_decode(file_get_contents("resources/dungeon-info.json"), true);
@@ -43,20 +46,36 @@ foreach ($dungeonInfo as $currentRoom) {
             $newRoom = new RoomWithMonster($currentRoom["id"], $currentRoom["prev-connection"], $currentRoom["next-connection"], $monster);
             $rooms[$currentRoom["id"]] = $newRoom;
             break;
-
+        case "exit":
+            $newRoom = new ExitRoom($currentRoom["id"], $currentRoom["prev-connection"], $currentRoom["next-connection"]);
+            $rooms[$currentRoom["id"]] = $newRoom;
+            $exitId = $currentRoom["id"];
+            break;
     }
 }
-logger("Создано подземелье.");
+logger("Создано подземелье.\n");
 foreach ($characterMoves as $id) {
-    $character->setCurrentPosition($id);
-    logger("Персонаж находится в комнате " . $character->getCurrentPosition() . ".");
-    if (!$rooms[$id]->getIsVisited()) {
-        $rooms[$id]->interact($character);
-        $rooms[$id]->visit();
-    } else {
-        logger("Эта комната уже была посещена.");
+    try {
+        if ($rooms[$character->getCurrentPosition()]->getNextConnection() != $id && $rooms[$character->getCurrentPosition()]->getPrevConnection() != $id && !$flagFirstPosition) {
+            throw new WrongCharacterMoveException(1);
+        }
+        $character->setCurrentPosition($id);
+        logger("Персонаж находится в комнате " . $character->getCurrentPosition() . ".");
+        if (!$rooms[$id]->getIsVisited()) {
+            $flagFirstPosition = false;
+            $rooms[$id]->interact($character);
+            $rooms[$id]->visit();
+            if ($id == $exitId) {
+                fwrite(fopen("resources/output.json", "w+"), json_encode($character->getPoints()));
+                logger("Игра закончена.");
+                break;
+            }
+        } else {
+            logger("Эта комната уже была посещена.");
+        }
+        logger("");
+    } catch (WrongCharacterMoveException $e) {
+        echo($e->getMessage());
+        break;
     }
 }
-fwrite(fopen("resources/output.json", "w+"), json_encode($character->getPoints()));
-//todo обработать исключения
-//todo дождаться ответа что такое выход

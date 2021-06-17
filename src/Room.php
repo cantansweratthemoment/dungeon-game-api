@@ -23,6 +23,16 @@ abstract class Room implements Interactive
         $this->isVisited = false;
     }
 
+    public function getPrevConnection()
+    {
+        return $this->prevConnection;
+    }
+
+    public function getNextConnection()
+    {
+        return $this->nextConnection;
+    }
+
     public function getIsVisited()
     {
         return $this->isVisited;
