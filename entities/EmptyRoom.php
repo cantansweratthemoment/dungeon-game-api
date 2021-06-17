@@ -10,7 +10,7 @@ class EmptyRoom extends Room
 
     public function interact($character)
     {
-        logger("Эта комната пустая.");
+        echo("Эта комната пустая.");
     }
 
 }

@@ -25,19 +25,19 @@ class Monster implements Interactive
 
     public function interact($character)
     {
-        logger("Начальная сила монстра: " . $this->strength);
+        echo("Начальная сила монстра: " . $this->strength);
         while ($this->strength > 0) {
             $punch = rand(MIN_PUNCH, MAX_PUNCH);
-            logger("Монстру наносится урон величины " . $punch . ".");
+            echo("Монстру наносится урон величины " . $punch . ".");
             if ($this->takeHit($punch)) {
                 $character->increasePoints($this->strength);
                 break;
             } else {
                 $this->decreaseStrength($this->lostPoints);
-                logger("Сила монстра уменьшена на " . $this->lostPoints . ".");
+                echo("Сила монстра уменьшена на " . $this->lostPoints . ".");
             }
         }
-        logger("Монстр побежден.");
+        echo("Монстр побежден.");
     }
 
     public function takeHit($punch)

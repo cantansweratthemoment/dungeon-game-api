@@ -10,9 +10,9 @@ class Chest implements Interactive
     public function interact($character)
     {
         if (!$this->isOpened) {
-            logger("Сундук открылся.");
+            echo("Сундук открылся.");
             $givenPoints = rand($this->min, $this->max);
-            logger("Полученное количество очков от сундука: " . $givenPoints);
+            echo("Полученное количество очков от сундука: " . $givenPoints);
             $character->increasePoints($givenPoints);
         }
     }

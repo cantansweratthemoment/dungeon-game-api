@@ -6,7 +6,7 @@ class RoomWithChest extends Room
 
     public function interact($character)
     {
-        logger("Происходит взаимодействие с сундуком.");
+        echo("Происходит взаимодействие с сундуком.");
         $this->chest->interact($character);
         $this->chest->setIsOpened(true);
     }

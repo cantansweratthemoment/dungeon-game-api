@@ -6,7 +6,7 @@ class RoomWithMonster extends Room
 
     public function interact($character)
     {
-        logger("Происходит взаимодействие с монстром.");
+        echo("Происходит взаимодействие с монстром.");
         $this->monster->interact($character);
         $this->monster->setIsBeaten(true);
     }

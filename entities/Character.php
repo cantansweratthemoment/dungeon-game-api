@@ -18,17 +18,17 @@ class Character
     public function increasePoints($addition)
     {
         $this->points = $this->points + $addition;
-        logger("Количество очков персонажа увеличено на " . $addition . ". Новое значение очков: " . $this->getPoints() . ".");
+        echo("Количество очков персонажа увеличено на " . $addition . ". Новое значение очков: " . $this->getPoints() . ".");
     }
 
     public function decreasePoints($addition)
     {
         if ($addition <= $this->points) {
             $this->points = $this->points + $addition;
-            logger("Количество очков персонажа уменьшено на " . $addition . ". Новое значение очков: " . $this->getPoints() . ".");
+            echo("Количество очков персонажа уменьшено на " . $addition . ". Новое значение очков: " . $this->getPoints() . ".");
         } else {
             $this->points = 0;
-            logger("Новое значение очков персонажа: 0.");
+            echo("Новое значение очков персонажа: 0.");
         }
     }
 
